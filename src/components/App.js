@@ -24,12 +24,10 @@ function App() {
   const [currentUser, setCurentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [deleteCard, setDeleteCard] = React.useState(null);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
-    React.useState(false);
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
-    React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(null);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
   const [userEmail, setUserEmail] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [infoTooltipOpen, setInfoTooltipOpen] = useState(false);
@@ -51,7 +49,7 @@ function App() {
         setInfoTooltipImage(imageError);
         setMessage("Что-то пошло не так! Попробуйте ещё раз.");
         setInfoTooltipOpen(true);
- console.log(`Ошибка ${err}`);
+        console.log(`Ошибка ${err}`);
       });
   }
 
@@ -69,7 +67,7 @@ function App() {
         setInfoTooltipImage(imageError);
         setMessage("Что-то пошло не так! Попробуйте ещё раз.");
         setInfoTooltipOpen(true);
-console.log(`Ошибка ${err}`);
+        console.log(`Ошибка ${err}`);
       });
   }
 
@@ -100,21 +98,25 @@ console.log(`Ошибка ${err}`);
     setLoggedIn(false);
   }
 
-  React.useEffect(() => {
-    apiCards
-      .getUsers()
-      .then(setCurentUser)
-      .catch((arr) => alert(arr));
-  }, []);
+  useEffect(() => {
+    if (loggedIn) {
+      apiCards
+        .getUsers()
+        .then(setCurentUser)
+        .catch((arr) => alert(arr));
+    }
+  }, [loggedIn]);
 
-  React.useEffect(() => {
-    apiCards
-      .getCards()
-      .then((result) => {
-        setCards(result);
-      })
-      .catch((arr) => alert(arr));
-  }, []);
+  useEffect(() => {
+    if (loggedIn) {
+      apiCards
+        .getCards()
+        .then((result) => {
+          setCards(result);
+        })
+        .catch((arr) => alert(arr));
+    }
+  }, [loggedIn]);
 
   function handleUpdateUser(data) {
     apiCards

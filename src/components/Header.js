@@ -1,6 +1,6 @@
 import logoHeader from '../images/logo-header.svg';
 import React from 'react';
-import {Link, Route} from "react-router-dom";
+import {Link, Route, Switch} from "react-router-dom";
 
 function Header({loggedIn, userEmail, onSignOut}) {
     return ( 
@@ -13,22 +13,24 @@ function Header({loggedIn, userEmail, onSignOut}) {
        
        {!loggedIn &&
                 <>
+                <Switch>
                     {<Route path="/sign-up">
                         <Link to="/sign-in" className="header__link">Войти</Link>
                     </Route>}
                     {<Route path="/sign-in">
                         <Link to="/sign-up" className="header__link">Регистрация</Link>
                     </Route>}
+                    </Switch>
                 </>
             }
             
 
-            {loggedIn &&
+            <Route exact path="/">
                 <div className="header__nav">
                     <p className="header__email">{userEmail}</p>
                     <div className="header__link header__link_out" onClick={onSignOut} >Выйти</div>
                 </div>
-            }
+                </Route>
       </header>
 
     )}
