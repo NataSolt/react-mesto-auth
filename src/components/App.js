@@ -234,7 +234,7 @@ function App() {
               loggedIn={loggedIn}
             />
 
-            <Route exact path="/sign-up">
+            <Route exact path="/signup">
               <Register onRegister={onRegister} />
             </Route>
 
